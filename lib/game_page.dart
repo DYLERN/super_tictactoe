@@ -11,7 +11,13 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  final game = SuperTicTacToe(boardDimension: 3);
+  late SuperTicTacToe game;
+
+  @override
+  void initState() {
+    super.initState();
+    reset();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,7 @@ class _GamePageState extends State<GamePage> {
         centerTitle: false,
         actions: [
           FilledButton(
-            onPressed: () {},
+            onPressed: reset,
             child: const Text('RESET'),
           ),
           const Gap(8.0),
@@ -57,5 +63,9 @@ class _GamePageState extends State<GamePage> {
         SnackBar(content: Text('${winner.player.name} wins the game with ${winner.winningIndices}!')),
       );
     }
+  }
+
+  void reset() {
+    setState(() => game = SuperTicTacToe(boardDimension: 3));
   }
 }
