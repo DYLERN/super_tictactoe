@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:super_tictactoe/game/super_tic_tac_toe.dart';
 import 'package:super_tictactoe/super_grid.dart';
@@ -18,16 +16,22 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Super Tic-Tac-Toe'),
+        centerTitle: false,
+        actions: [
+          FilledButton(
+            onPressed: () {},
+            child: const Text('RESET'),
+          ),
+          const Gap(8.0),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: Column(
             children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Reset'),
-              ),
-              const Gap(8.0),
               Expanded(
                 child: SuperGrid(
                   game: game,

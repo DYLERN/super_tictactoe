@@ -15,8 +15,11 @@ class SuperTicTacToeApp extends StatefulWidget {
 class _SuperTicTacToeAppState extends State<SuperTicTacToeApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: GamePage(),
+    return MaterialApp(
+      home: const GamePage(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+      ),
     );
   }
 }
