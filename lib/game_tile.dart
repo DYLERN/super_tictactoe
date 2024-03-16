@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:super_tictactoe/game/player.dart';
 import 'package:super_tictactoe/player_sprite.dart';
 
-class TicTacToeTile extends StatelessWidget {
+class GameTile extends StatelessWidget {
   final Player? player;
   final VoidCallback? onPressed;
   final EdgeInsets padding;
 
-  const TicTacToeTile({
+  const GameTile({
     super.key,
     required this.player,
     required this.onPressed,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:super_tictactoe/game/super_tic_tac_toe.dart';
 import 'package:super_tictactoe/game_grid.dart';
 import 'package:super_tictactoe/player_sprite.dart';
-import 'package:super_tictactoe/tic_tac_toe_tile.dart';
+import 'package:super_tictactoe/game_tile.dart';
 
 class SuperGrid extends StatelessWidget {
   final SuperTicTacToe game;
@@ -42,7 +42,7 @@ class SuperGrid extends StatelessWidget {
                             final player = game.getInnerGameBoardPosition((gameRow, gameCol), (row, col));
 
                             void play() => onPlayMade((gameRow, gameCol), (row, col));
-                            return TicTacToeTile(
+                            return GameTile(
                               player: player,
                               onPressed: player == null && game.playing ? play : null,
                               padding: intraTilePadding,
