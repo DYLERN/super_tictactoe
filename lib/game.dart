@@ -20,7 +20,13 @@ class Game {
     return _board[row][col];
   }
 
-  void makeMove(int row, int col) {
+  /// Make a move on the board.
+  ///
+  /// If an invalid move is attempted, nothing will happen.
+  ///
+  /// The [asPlayer] parameter can be used to choose a player to move.
+  /// If it is not provided, the [currentPlayer] will be used instead, which will be cycled after the move.
+  void makeMove(int row, int col, {Player? asPlayer}) {
     if (!playing) return;
 
     final existing = _board[row][col];
@@ -28,7 +34,7 @@ class Game {
       return;
     }
 
-    _board[row][col] = currentPlayer;
+    _board[row][col] = asPlayer ?? currentPlayer;
 
     final winningPlayer = _checkForWins();
     if (winningPlayer != null) {
@@ -37,7 +43,9 @@ class Game {
       return;
     }
 
-    _cyclePlayer();
+    if (asPlayer == null) {
+      _cyclePlayer();
+    }
 
     return;
   }
