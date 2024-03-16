@@ -25,25 +25,39 @@ class _GamePageState extends State<GamePage> {
               width: minDimension,
               height: minDimension,
               padding: const EdgeInsets.all(16.0),
-              child: GridView.count(
-                crossAxisCount: game.boardDimension,
-                physics: const NeverScrollableScrollPhysics(),
+              child: Table(
+                columnWidths: {
+                  for (int columnIndex = 0; columnIndex < game.boardDimension; columnIndex++)
+                    columnIndex: const FlexColumnWidth(1),
+                },
+                border: const TableBorder(
+                  verticalInside: BorderSide(color: Colors.black),
+                  horizontalInside: BorderSide(color: Colors.black),
+                ),
                 children: [
                   for (int row = 0; row < game.boardDimension; row++)
-                    for (int col = 0; col < game.boardDimension; col++)
-                      Builder(
-                        builder: (context) {
-                          final player = game.getBoardPosition(row, col);
+                    TableRow(
+                      children: [
+                        for (int col = 0; col < game.boardDimension; col++)
+                          TableCell(
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: Builder(
+                                builder: (context) {
+                                  final player = game.getBoardPosition(row, col);
 
-                          void play() => makePlay(row, col);
+                                  void play() => makePlay(row, col);
 
-                          return _GameTile(
-                            player: player,
-                            border: Border.all(),
-                            onPressed: player == null && game.playing ? play : null,
-                          );
-                        },
-                      ),
+                                  return _GameTile(
+                                    player: player,
+                                    onPressed: player == null && game.playing ? play : null,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
                 ],
               ),
             ),
@@ -64,29 +78,24 @@ class _GamePageState extends State<GamePage> {
 
 class _GameTile extends StatelessWidget {
   final Player? player;
-  final Border border;
   final VoidCallback? onPressed;
 
   const _GameTile({
     required this.player,
-    required this.border,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(border: border),
-      child: InkWell(
-        onTap: onPressed,
-        child: switch (player) {
-          null => null,
-          final player => Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: PlayerSprite(player: player),
-            ),
-        },
-      ),
+    return InkWell(
+      onTap: onPressed,
+      child: switch (player) {
+        null => null,
+        final player => Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: PlayerSprite(player: player),
+          ),
+      },
     );
   }
 }
