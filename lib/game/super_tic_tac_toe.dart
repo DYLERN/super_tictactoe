@@ -13,11 +13,11 @@ class SuperTicTacToe {
         );
 
   Player _currentPlayer = Player.X;
-  final Map<(int, int), WinningPlayer> _winners = {};
+  final Map<(int, int), Player> _winners = {};
   WinningPlayer? _overallWinner;
 
   Player get currentPlayer => _currentPlayer;
-  WinningPlayer? getWinner(int row, int col) => _winners[(row, col)];
+  Player? getWinner(int row, int col) => _winners[(row, col)];
   bool get playing => overallWinner == null;
   WinningPlayer? get overallWinner => _overallWinner;
 
@@ -33,7 +33,7 @@ class SuperTicTacToe {
     innerGame.makeMove(position.$1, position.$2, asPlayer: currentPlayer);
 
     if (innerGame.winner case final winner?) {
-      _winners[game] = winner;
+      _winners[game] = winner.player;
       final overallWinner = _checkForWinsAboutIndex(game);
       if (overallWinner != null) {
         _overallWinner = overallWinner;
@@ -47,16 +47,44 @@ class SuperTicTacToe {
   WinningPlayer? _checkForWinsAboutIndex((int, int) index) {
     final (row, col) = index;
 
-    final playersInRow = List.generate(boardDimension, (i) => _winners[(row, i)]);
-    if (playersInRow.first case final player? when playersInRow.every((p) => p?.player == player.player)) {
-      return player;
+    final rowIndices = List.generate(boardDimension, (i) => (row, i));
+    final playersInRow = rowIndices.map((e) => _winners[e]);
+    if (playersInRow.winningPlayer case final winner?) {
+      return WinningPlayer(player: winner, winningIndices: rowIndices);
     }
 
-    final playersInCol = List.generate(boardDimension, (i) => _winners[(i, col)]);
-    if (playersInCol.first case final player? when playersInCol.every((p) => p?.player == player.player)) {
-      return player;
+    final colIndices = List.generate(boardDimension, (i) => (i, col));
+    final playersInCol = colIndices.map((e) => _winners[e]);
+    if (playersInCol.winningPlayer case final winner?) {
+      return WinningPlayer(player: winner, winningIndices: colIndices);
+    }
+
+    if (row == col) {
+      final diagonalIndices = List.generate(boardDimension, (index) => (index, index));
+      final playersOnDiagonal = diagonalIndices.map((e) => _winners[e]);
+      if (playersOnDiagonal.winningPlayer case final winner?) {
+        return WinningPlayer(player: winner, winningIndices: diagonalIndices);
+      }
+    }
+
+    if (boardDimension - row - 1 == col) {
+      final diagonalIndices = List.generate(boardDimension, (i) => (boardDimension - i - 1, i));
+      final playersOnDiagonal = diagonalIndices.map((e) => _winners[e]);
+      if (playersOnDiagonal.winningPlayer case final winner?) {
+        return WinningPlayer(player: winner, winningIndices: diagonalIndices);
+      }
     }
 
     return null;
+  }
+}
+
+extension _WinningPlayerIterableExtension on Iterable<Player?> {
+  Player? get winningPlayer {
+    if (first case final player? when every((p) => p == player)) {
+      return player;
+    } else {
+      return null;
+    }
   }
 }

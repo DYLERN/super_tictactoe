@@ -26,7 +26,7 @@ class _GamePageState extends State<GamePage> {
                 if (game.getWinner(gameRow, gameCol) case final innerWinner?) {
                   return Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: PlayerSprite(player: innerWinner.player),
+                    child: PlayerSprite(player: innerWinner),
                   );
                 }
 
@@ -58,7 +58,7 @@ class _GamePageState extends State<GamePage> {
     setState(() => this.game.makeMove(game, position));
     if (this.game.overallWinner case final winner?) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${winner.player.name} wins the game!')),
+        SnackBar(content: Text('${winner.player.name} wins the game with ${winner.winningIndices}!')),
       );
     }
   }
