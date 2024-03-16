@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class GameGrid extends StatelessWidget {
@@ -30,19 +28,16 @@ class GameGrid extends StatelessWidget {
               children: [
                 for (int col = 0; col < boardDimension; col++)
                   TableCell(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: Builder(builder: (context) {
-                          final index = boardDimension * row + col;
-                          if (children.length > index) {
-                            return children[index];
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        }),
-                      ),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Builder(builder: (context) {
+                        final index = boardDimension * row + col;
+                        if (children.length > index) {
+                          return children[index];
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      }),
                     ),
                   ),
               ],

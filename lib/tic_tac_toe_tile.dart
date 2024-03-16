@@ -5,11 +5,13 @@ import 'package:super_tictactoe/player_sprite.dart';
 class TicTacToeTile extends StatelessWidget {
   final Player? player;
   final VoidCallback? onPressed;
+  final EdgeInsets padding;
 
   const TicTacToeTile({
     super.key,
     required this.player,
     required this.onPressed,
+    this.padding = EdgeInsets.zero,
   });
 
   @override
@@ -19,7 +21,7 @@ class TicTacToeTile extends StatelessWidget {
       child: switch (player) {
         null => null,
         final player => Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: padding,
             child: PlayerSprite(player: player),
           ),
       },
