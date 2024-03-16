@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:super_tictactoe/game/super_tic_tac_toe.dart';
+import 'package:super_tictactoe/player_sprite.dart';
 import 'package:super_tictactoe/super_grid.dart';
 
 class GamePage extends StatefulWidget {
@@ -45,10 +46,24 @@ class _GamePageState extends State<GamePage> {
                 ),
               ),
               const Gap(8.0),
-              Text(
-                'Currently playing: ${game.currentPlayer.name}',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+              Builder(builder: (context) {
+                final textStyle = Theme.of(context).textTheme.titleLarge;
+
+                return Text.rich(
+                  TextSpan(
+                    style: textStyle,
+                    children: [
+                      const TextSpan(text: 'Currently Playing: '),
+                      WidgetSpan(
+                        child: PlayerSprite(
+                          player: game.currentPlayer,
+                          size: Size.square(textStyle?.fontSize ?? 14.0),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
             ],
           ),
         ),

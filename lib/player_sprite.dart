@@ -3,12 +3,18 @@ import 'package:super_tictactoe/game/player.dart';
 
 class PlayerSprite extends StatelessWidget {
   final Player player;
+  final Size size;
 
-  const PlayerSprite({super.key, required this.player});
+  const PlayerSprite({
+    super.key,
+    required this.player,
+    this.size = Size.zero,
+  });
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
+      size: size,
       painter: switch (player) {
         Player.X => _PlayerXPainter(),
         Player.O => _PlayerOPainter(),
