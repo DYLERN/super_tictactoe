@@ -11,11 +11,10 @@ class TicTacToe {
           (index) => List.generate(boardDimension, (index) => null),
         );
 
-  bool _playing = true;
   Player _currentPlayer = Player.X;
   WinningPlayer? _winner;
 
-  bool get playing => _playing;
+  bool get playing => winner == null;
   Player get currentPlayer => _currentPlayer;
   WinningPlayer? get winner => _winner;
 
@@ -41,7 +40,6 @@ class TicTacToe {
 
     final winningPlayer = _checkForWins();
     if (winningPlayer != null) {
-      _playing = false;
       _winner = winningPlayer;
       return;
     }

@@ -42,7 +42,7 @@ class _GamePageState extends State<GamePage> {
                             void play() => makePlay((gameRow, gameCol), (row, col));
                             return _GameTile(
                               player: player,
-                              onPressed: player == null ? play : null,
+                              onPressed: player == null && game.playing ? play : null,
                             );
                           },
                         ),
@@ -56,6 +56,11 @@ class _GamePageState extends State<GamePage> {
 
   void makePlay((int, int) game, (int, int) position) {
     setState(() => this.game.makeMove(game, position));
+    if (this.game.overallWinner case final winner?) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${winner.player.name} wins the game!')),
+      );
+    }
   }
 }
 
