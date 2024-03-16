@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:super_tictactoe/game.dart';
+import 'package:super_tictactoe/tic_tac_toe.dart';
 import 'package:super_tictactoe/game_grid.dart';
 import 'package:super_tictactoe/player_sprite.dart';
 
@@ -11,10 +11,10 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  final outerGame = Game(boardDimension: 3);
+  final outerGame = TicTacToe(boardDimension: 3);
   late final innerGames = List.generate(
     outerGame.boardDimension * outerGame.boardDimension,
-    (_) => Game(boardDimension: 3),
+    (_) => TicTacToe(boardDimension: 3),
   );
 
   @override
@@ -56,7 +56,7 @@ class _GamePageState extends State<GamePage> {
     );
   }
 
-  void makePlay(Game game, int row, int col) {
+  void makePlay(TicTacToe game, int row, int col) {
     setState(() => game.makeMove(row, col));
     final winner = game.winner;
     if (winner != null) {}

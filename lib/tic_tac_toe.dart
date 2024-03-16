@@ -1,8 +1,8 @@
-class Game {
+class TicTacToe {
   final int boardDimension;
   final List<List<Player?>> _board;
 
-  Game({required this.boardDimension})
+  TicTacToe({required this.boardDimension})
       : _board = List.generate(
           boardDimension,
           (index) => List.generate(boardDimension, (index) => null),
