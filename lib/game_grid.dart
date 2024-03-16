@@ -18,10 +18,9 @@ class GameGrid extends StatelessWidget {
       builder: (context, constraints) {
         final minDimension = min(constraints.maxWidth, constraints.maxHeight);
         return Center(
-          child: Container(
+          child: SizedBox(
             width: minDimension,
             height: minDimension,
-            padding: const EdgeInsets.all(16.0),
             child: Table(
               columnWidths: {
                 for (int columnIndex = 0; columnIndex < boardDimension; columnIndex++)
@@ -37,16 +36,19 @@ class GameGrid extends StatelessWidget {
                     children: [
                       for (int col = 0; col < boardDimension; col++)
                         TableCell(
-                          child: AspectRatio(
-                            aspectRatio: 1,
-                            child: Builder(builder: (context) {
-                              final index = boardDimension * row + col;
-                              if (children.length > index) {
-                                return children[index];
-                              } else {
-                                return const SizedBox.shrink();
-                              }
-                            }),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: Builder(builder: (context) {
+                                final index = boardDimension * row + col;
+                                if (children.length > index) {
+                                  return children[index];
+                                } else {
+                                  return const SizedBox.shrink();
+                                }
+                              }),
+                            ),
                           ),
                         ),
                     ],
