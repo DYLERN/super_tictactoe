@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
@@ -19,25 +20,27 @@ class _GamePageState extends State<GamePage> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text('Reset'),
-            ),
-            const Gap(8.0),
-            Expanded(
-              child: SuperGrid(
-                game: game,
-                onPlayMade: makePlay,
+        child: Center(
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text('Reset'),
               ),
-            ),
-            const Gap(8.0),
-            Text(
-              'Currently playing: ${game.currentPlayer.name}',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ],
+              const Gap(8.0),
+              Expanded(
+                child: SuperGrid(
+                  game: game,
+                  onPlayMade: makePlay,
+                ),
+              ),
+              const Gap(8.0),
+              Text(
+                'Currently playing: ${game.currentPlayer.name}',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -14,50 +14,41 @@ class GameGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final minDimension = min(constraints.maxWidth, constraints.maxHeight);
-        return Center(
-          child: SizedBox(
-            width: minDimension,
-            height: minDimension,
-            child: Table(
-              columnWidths: {
-                for (int columnIndex = 0; columnIndex < boardDimension; columnIndex++)
-                  columnIndex: const FlexColumnWidth(1),
-              },
-              border: const TableBorder(
-                verticalInside: BorderSide(color: Colors.black),
-                horizontalInside: BorderSide(color: Colors.black),
-              ),
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Table(
+        columnWidths: {
+          for (int columnIndex = 0; columnIndex < boardDimension; columnIndex++) columnIndex: const FlexColumnWidth(1),
+        },
+        border: const TableBorder(
+          verticalInside: BorderSide(color: Colors.black),
+          horizontalInside: BorderSide(color: Colors.black),
+        ),
+        children: [
+          for (int row = 0; row < boardDimension; row++)
+            TableRow(
               children: [
-                for (int row = 0; row < boardDimension; row++)
-                  TableRow(
-                    children: [
-                      for (int col = 0; col < boardDimension; col++)
-                        TableCell(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: AspectRatio(
-                              aspectRatio: 1,
-                              child: Builder(builder: (context) {
-                                final index = boardDimension * row + col;
-                                if (children.length > index) {
-                                  return children[index];
-                                } else {
-                                  return const SizedBox.shrink();
-                                }
-                              }),
-                            ),
-                          ),
-                        ),
-                    ],
+                for (int col = 0; col < boardDimension; col++)
+                  TableCell(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: Builder(builder: (context) {
+                          final index = boardDimension * row + col;
+                          if (children.length > index) {
+                            return children[index];
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        }),
+                      ),
+                    ),
                   ),
               ],
             ),
-          ),
-        );
-      },
+        ],
+      ),
     );
   }
 }
