@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:super_tictactoe/tic_tac_toe.dart';
+import 'package:super_tictactoe/game/player.dart';
+import 'package:super_tictactoe/game/tic_tac_toe.dart';
 import 'package:super_tictactoe/game_grid.dart';
 import 'package:super_tictactoe/player_sprite.dart';
 

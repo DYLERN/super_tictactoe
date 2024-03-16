@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:super_tictactoe/tic_tac_toe.dart';
+import 'package:super_tictactoe/game/player.dart';
 
 class PlayerSprite extends StatelessWidget {
   final Player player;

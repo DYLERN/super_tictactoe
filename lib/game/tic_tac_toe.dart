@@ -1,3 +1,6 @@
+import 'package:super_tictactoe/game/player.dart';
+import 'package:super_tictactoe/game/winning_player.dart';
+
 class TicTacToe {
   final int boardDimension;
   final List<List<Player?>> _board;
@@ -127,21 +130,4 @@ class TicTacToe {
 
     return null;
   }
-}
-
-enum Player {
-  X,
-  O;
-
-  Player get nextPlayer => switch (this) {
-        Player.X => Player.O,
-        Player.O => Player.X,
-      };
-}
-
-class WinningPlayer {
-  final Player player;
-  final List<(int, int)> winningIndices;
-
-  const WinningPlayer({required this.player, required this.winningIndices});
 }
