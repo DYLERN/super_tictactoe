@@ -1,5 +1,6 @@
 import 'package:super_tictactoe/game/player.dart';
 import 'package:super_tictactoe/game/tic_tac_toe.dart';
+import 'package:super_tictactoe/game/tic_tac_toe_rules.dart';
 import 'package:super_tictactoe/game/winning_player.dart';
 
 class SuperTicTacToe {
@@ -9,7 +10,10 @@ class SuperTicTacToe {
   SuperTicTacToe({required this.boardDimension})
       : _innerGames = List.generate(
           boardDimension * boardDimension,
-          (index) => TicTacToe(boardDimension: boardDimension),
+          (index) => TicTacToe(
+            boardDimension: boardDimension,
+            rules: const TicTacToeRules(noFirstMoveCenter: true),
+          ),
         );
 
   Player _currentPlayer = Player.X;
@@ -30,18 +34,23 @@ class SuperTicTacToe {
     if (!playing) return;
 
     final innerGame = _innerGames[game.$1 * boardDimension + game.$2];
-    innerGame.makeMove(position.$1, position.$2, asPlayer: currentPlayer);
-
-    if (innerGame.winner case final winner?) {
-      _winners[game] = winner.player;
-      final overallWinner = _checkForWinsAboutIndex(game);
-      if (overallWinner != null) {
-        _overallWinner = overallWinner;
+    final result = innerGame.makeMove(position.$1, position.$2, asPlayer: currentPlayer);
+    switch (result) {
+      case MoveResult$NotPlaying():
+      case MoveResult$PositionNotEmpty():
+      case MoveResult$CenterUnavailable():
         return;
-      }
+      case MoveResult$WinningMove(winningPlayer: final winner):
+        _winners[game] = winner.player;
+        final overallWinner = _checkForWinsAboutIndex(game);
+        if (overallWinner != null) {
+          _overallWinner = overallWinner;
+          return;
+        }
+        _currentPlayer = _currentPlayer.nextPlayer;
+      case MoveResult$Normal():
+        _currentPlayer = _currentPlayer.nextPlayer;
     }
-
-    _currentPlayer = _currentPlayer.nextPlayer;
   }
 
   WinningPlayer? _checkForWinsAboutIndex((int, int) index) {
